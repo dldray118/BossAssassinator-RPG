@@ -1,6 +1,29 @@
+//plugins {          Came with build
+//    id("java")
+//}
+//
+//group = "org.example"
+//version = "1.0-SNAPSHOT"
+//
+//repositories {
+//    mavenCentral()
+//}
+//
+//dependencies {
+//    testImplementation(platform("org.junit:junit-bom:5.10.0"))
+//    testImplementation("org.junit.jupiter:junit-jupiter")
+//}
+//
+//tasks.test {
+//    useJUnitPlatform()
+//}
+
+
+
+// Gradle build given in assignment 3
 plugins {
     id "com.github.spotbugs" version "5.0.12"
-    id "checkstyle"
+   // id "checkstyle"
 }
 
 apply plugin: 'application'
@@ -39,22 +62,26 @@ jacocoTestReport {
         html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
     }
 }
-apply plugin: 'checkstyle'
-checkstyle {
-    // Keep checkstyle a little quieter
-    ignoreFailures = true
-    showViolations = false
-}
 
-tasks.withType(Checkstyle) {
-    reports {
-        html.enabled = true
-        xml.enabled = false
-    }
-}
-checkstyle {
-    toolVersion = "8.8"
-}
+
+//apply plugin: 'checkstyle'
+//checkstyle {
+//    // Keep checkstyle a little quieter
+//    ignoreFailures = true
+//    showViolations = false
+//}
+//
+//tasks.withType(Checkstyle) {
+//    reports {
+//    //    html.enabled = true                                   // Why don't these work.
+//     //   xml.enabled = false
+//    }
+//}
+//checkstyle {
+//    toolVersion = "8.8"
+//}
+
+
 
 
 ///////////////////////////////////////////////////////////////////////
