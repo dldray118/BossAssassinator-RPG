@@ -23,7 +23,7 @@
 // Gradle build given in assignment 3
 plugins {
     id "com.github.spotbugs" version "5.0.12"
-   // id "checkstyle"
+    id "checkstyle"
 }
 
 apply plugin: 'application'
@@ -45,7 +45,6 @@ repositories {
 // In this section you declare the dependencies for your production and test code
 dependencies {
     implementation "junit:junit:4.12"
-    implementation files('cls/')
 }
 
 jacocoTestReport {
@@ -64,22 +63,22 @@ jacocoTestReport {
 }
 
 
-//apply plugin: 'checkstyle'
-//checkstyle {
-//    // Keep checkstyle a little quieter
-//    ignoreFailures = true
-//    showViolations = false
-//}
-//
-//tasks.withType(Checkstyle) {
-//    reports {
-//    //    html.enabled = true                                   // Why don't these work.
-//     //   xml.enabled = false
-//    }
-//}
-//checkstyle {
-//    toolVersion = "8.8"
-//}
+apply plugin: 'checkstyle'
+checkstyle {
+    // Keep checkstyle a little quieter
+    ignoreFailures = true
+    showViolations = false
+}
+
+tasks.withType(Checkstyle) {
+    reports {
+    //    html.enabled = true                                   // Why don't these work.
+     //   xml.enabled = false
+    }
+}
+checkstyle {
+    toolVersion = "8.8"
+}
 
 
 
