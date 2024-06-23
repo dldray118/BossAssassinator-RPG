@@ -1,4 +1,4 @@
-package game.engine;
+package game.items;
 
 /**
  * Item interface for items in the game.
