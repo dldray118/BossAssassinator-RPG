@@ -31,7 +31,7 @@ apply plugin: 'jacoco'
 
 
 
-mainClassName = 'Main'
+mainClassName = 'game.engine.Main'
 
 run {
     standardInput = System.in
