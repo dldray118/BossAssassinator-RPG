@@ -48,7 +48,7 @@ public class GameContext {
     public Fighter getBossAssassinator() {
         return bossAssassinator;
     }
-    
+
     /**
      * Get the random number generator.
      * @return The random number generator.
