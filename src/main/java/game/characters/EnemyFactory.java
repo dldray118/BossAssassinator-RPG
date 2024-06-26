@@ -3,7 +3,7 @@ package game.characters;
 /**
  * EnemyFactory class for creating different types of enemies.
  */
-class EnemyFactory {
+public class EnemyFactory {
     public Enemy createEnemy(String type) {
         switch (type.toLowerCase()) {
             case "small":
