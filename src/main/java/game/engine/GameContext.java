@@ -1,8 +1,84 @@
 package game.engine;
 
+import game.characters.BasicFighter;
+import game.characters.Fighter;
+
+import java.util.Random;
+import java.util.Scanner;
+
 /**
  * GameContext class manages the state and flow of the game.
  */
 public class GameContext {
+    private GameState currentState;
+    private Fighter bossAssassinator;
+    private Random random;
+    private Scanner scanner;
+    private boolean isInteractive;
+
+    public GameContext() {
+        this.currentState = new ExploringState(this);
+        this.bossAssassinator = new BasicFighter("Boss Assassinator");
+        this.random = new Random();
+        this.scanner = new Scanner(System.in);
+    }
+
+    /**
+     * Set the current state of the game.
+     * @param state The new state to set.
+     */
+    public void setState(GameState state) {
+        this.currentState = state;
+    }
+
+    /**
+     * Start the game loop.
+     */
+    public void startGame() {
+        while (!(currentState instanceof GameOverState)) {
+            currentState.handle();
+        }
+        System.out.println("Game Over! Thanks for playing.");
+    }
+
+    /**
+     * Get the main character (Boss Assassinator).
+     * @return The main character.
+     */
+    public Fighter getBossAssassinator() {
+        return bossAssassinator;
+    }
+git 
+    /**
+     * Get the random number generator.
+     * @return The random number generator.
+     */
+    public Random getRandom() {
+        return random;
+    }
+
+    /**
+     * Get the scanner for user input.
+     * @return The scanner for user input.
+     */
+    public Scanner getScanner() {
+        return scanner;
+    }
+
+    /**
+     * Set the game to interactive or automatic mode.
+     * @param isInteractive True for interactive mode, false for automatic mode.
+     */
+    public void setInteractive(boolean isInteractive) {
+        this.isInteractive = isInteractive;
+    }
+
+    /**
+     * Check if the game is in interactive mode.
+     * @return True if interactive mode, false if automatic mode.
+     */
+    public boolean isInteractive() {
+        return isInteractive;
+    }
 
 }
