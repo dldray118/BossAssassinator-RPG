@@ -4,7 +4,7 @@ package game.characters;
  *
  * BasicFighter class implements the Fighter interface with basic capabilities.
  */
-class BasicFighter implements Fighter {
+public class BasicFighter implements Fighter {
     private String name;
     private String skills;
 
