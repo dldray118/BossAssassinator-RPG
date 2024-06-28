@@ -50,6 +50,14 @@ public class GameContext {
     }
 
     /**
+     * Set the main character (Boss Assassinator).
+     * @param bossAssassinator The main character to set.
+     */
+    public void setBossAssassinator(Fighter bossAssassinator) {
+        this.bossAssassinator = bossAssassinator;
+    }
+
+    /**
      * Get the random number generator.
      * @return The random number generator.
      */

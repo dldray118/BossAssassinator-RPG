@@ -1,9 +1,6 @@
 package game.characters;
 
-/**
- * SmallEnemy class implements the Enemy interface with basic attributes.
- */
-class SmallEnemy implements Enemy {
+public class SmallEnemy implements Enemy {
     private int health;
 
     public SmallEnemy() {
@@ -11,8 +8,10 @@ class SmallEnemy implements Enemy {
     }
 
     @Override
-    public void attack() {
-        System.out.println("Small Enemy attacks!");
+    public void attack(Fighter fighter) {
+        int damage = getDamage();
+        System.out.println(getName() + " attacks " + fighter.getName() + " for " + damage + " damage!");
+        fighter.takeDamage(damage);
     }
 
     @Override
@@ -23,5 +22,15 @@ class SmallEnemy implements Enemy {
     @Override
     public void setHealth(int health) {
         this.health = health;
+    }
+
+    @Override
+    public String getName() {
+        return "Small Enemy";
+    }
+
+    @Override
+    public int getDamage() {
+        return 5; // Small enemy attack damage
     }
 }

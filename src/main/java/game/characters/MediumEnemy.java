@@ -1,9 +1,6 @@
 package game.characters;
 
-/**
- * MediumEnemy class implements the Enemy interface with moderate attributes.
- */
-class MediumEnemy implements Enemy {
+public class MediumEnemy implements Enemy {
     private int health;
 
     public MediumEnemy() {
@@ -11,8 +8,10 @@ class MediumEnemy implements Enemy {
     }
 
     @Override
-    public void attack() {
-        System.out.println("Medium Enemy attacks!");
+    public void attack(Fighter fighter) {
+        int damage = getDamage();
+        System.out.println(getName() + " attacks " + fighter.getName() + " for " + damage + " damage!");
+        fighter.takeDamage(damage);
     }
 
     @Override
@@ -23,5 +22,15 @@ class MediumEnemy implements Enemy {
     @Override
     public void setHealth(int health) {
         this.health = health;
+    }
+
+    @Override
+    public String getName() {
+        return "Medium Enemy";
+    }
+
+    @Override
+    public int getDamage() {
+        return 10; // Medium enemy attack damage
     }
 }

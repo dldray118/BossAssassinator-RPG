@@ -11,8 +11,8 @@ abstract class FighterDecorator implements Fighter {
     }
 
     @Override
-    public void attack() {
-        decoratedFighter.attack();
+    public void attack(Enemy enemy) {
+        decoratedFighter.attack(enemy);
     }
 
     @Override

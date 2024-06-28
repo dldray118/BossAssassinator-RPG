@@ -1,18 +1,18 @@
 package game.characters;
 
-/**
- * BossEnemy class implements the Enemy interface with high attributes.
- */
-class BossEnemy implements Enemy {
+public class BossEnemy implements Enemy {
     private int health;
+    private String name = "Boss Enemy";
 
     public BossEnemy() {
         this.health = 200;
     }
 
     @Override
-    public void attack() {
-        System.out.println("Boss Enemy attacks!");
+    public void attack(Fighter fighter) {
+        int damage = getDamage();
+        System.out.println(getName() + " attacks " + fighter.getName() + " for " + damage + " damage!");
+        fighter.takeDamage(damage);
     }
 
     @Override
@@ -23,5 +23,15 @@ class BossEnemy implements Enemy {
     @Override
     public void setHealth(int health) {
         this.health = health;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public int getDamage() {
+        return 20; // Boss enemy attack damage
     }
 }
