@@ -27,7 +27,13 @@ public class BasicFighter implements Fighter {
         }
         for (String skill : skills) {
             System.out.println("Using skill: " + skill);
-            totalDamage += 5; // Each skill adds damage
+            if (skill.equals("Flying Roundhouse Kick")) {
+                totalDamage += 5;
+            } else if (skill.equals("Nunchuck Strike")) {
+                totalDamage += 10;
+            } else if (skill.equals("Ultimate Destruction")) {
+                totalDamage += 20;
+            }
         }
         int enemyHealth = enemy.getHealth() - totalDamage;
         enemy.setHealth(enemyHealth);
@@ -64,5 +70,4 @@ public class BasicFighter implements Fighter {
         health -= damage;
         System.out.println(name + " takes " + damage + " damage, health is now " + health);
     }
-
 }

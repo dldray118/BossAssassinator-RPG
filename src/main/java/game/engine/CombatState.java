@@ -61,7 +61,6 @@ public class CombatState implements GameState {
             bossAssassinator.attack(enemy);
             if (enemy.getHealth() > 0) {
                 enemy.attack(bossAssassinator);
-                // bossAssassinator.takeDamage(enemy.getDamage()); // Already handled inside enemy.attack()
             }
             // Pause for user input if interactive mode
             if (context.isInteractive()) {

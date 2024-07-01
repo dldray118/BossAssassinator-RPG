@@ -11,7 +11,6 @@ public class FinalSkillDecorator extends FighterDecorator {
     @Override
     public void attack(Enemy enemy) {
         System.out.println(decoratedFighter.getName() + " attacks with mad boss skills!");
-        decoratedFighter.attack(enemy);
         System.out.println("Using skill: Ultimate Destruction");
         int totalDamage = 10; // Base damage
         totalDamage += 20; // Final skill extra damage
