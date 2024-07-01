@@ -5,9 +5,14 @@ package game.items;
  */
 public class Potion implements Item {
     private String name;
+    private int healingAmount;
 
-    public Potion() {
-        this.name = "Potion";
+    public Potion(){
+    }
+
+    public Potion(String name, int healingAmount) {
+        this.name = name;
+        this.healingAmount = healingAmount;
     }
 
     @Override
@@ -18,5 +23,13 @@ public class Potion implements Item {
     @Override
     public void use() {
         System.out.println("Using potion.");
+    }
+
+    /**
+     * Gets the amount of healing provided by the potion.
+     * @return the healing amount.
+     */
+    public int getHealingAmount() {
+        return healingAmount;
     }
 }

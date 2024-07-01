@@ -3,14 +3,19 @@ package game.characters;
 import game.items.Weapon;
 import java.util.List;
 
+/**
+ * FinalSkillDecorator adds the "Ultimate Destruction" skill.
+ */
 public class FinalSkillDecorator extends FighterDecorator {
-    public FinalSkillDecorator(Fighter decoratedFighter) {
-        super(decoratedFighter);
+    public FinalSkillDecorator(Fighter fighter) {
+        super(fighter);
+        fighter.addSkill("Ultimate Destruction");
     }
 
     @Override
     public void attack(Enemy enemy) {
-        System.out.println(decoratedFighter.getName() + " attacks with mad boss skills!");
+        System.out.println(decoratedFighter.getName() + " attacks with final skills!");
+        decoratedFighter.attack(enemy);
         System.out.println("Using skill: Ultimate Destruction");
         int totalDamage = 10; // Base damage
         totalDamage += 20; // Final skill extra damage
@@ -30,7 +35,7 @@ public class FinalSkillDecorator extends FighterDecorator {
 
     @Override
     public String getName() {
-        return decoratedFighter.getName();
+        return decoratedFighter.getName() + " with Final Skill";
     }
 
     @Override
@@ -46,5 +51,10 @@ public class FinalSkillDecorator extends FighterDecorator {
     @Override
     public void takeDamage(int damage) {
         decoratedFighter.takeDamage(damage);
+    }
+
+    @Override
+    public String getSkills() {
+        return decoratedFighter.getSkills() + " Ultimate Destruction";
     }
 }

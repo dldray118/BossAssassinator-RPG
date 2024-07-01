@@ -32,6 +32,15 @@ public class GameContext {
     }
 
     /**
+     * Get the current state of the game.
+     * @return The current game state.
+     */
+    public GameState getCurrentState() {
+        return currentState;
+    }
+
+
+    /**
      * Start the game loop.
      */
     public void startGame() {

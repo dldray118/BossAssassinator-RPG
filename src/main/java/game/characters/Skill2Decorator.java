@@ -35,7 +35,7 @@ public class Skill2Decorator extends FighterDecorator {
 
     @Override
     public String getName() {
-        return decoratedFighter.getName();
+        return decoratedFighter.getName() + " with Skill 2";
     }
 
     @Override
@@ -51,5 +51,10 @@ public class Skill2Decorator extends FighterDecorator {
     @Override
     public void takeDamage(int damage) {
         decoratedFighter.takeDamage(damage);
+    }
+
+    @Override
+    public String getSkills() {
+        return decoratedFighter.getSkills() + "Nunchuck Strike ";
     }
 }

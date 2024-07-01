@@ -11,8 +11,9 @@ import java.util.Scanner;
 /**
  * ShopState class handles the shop phase of the game.
  */
-class ShopState implements GameState {
+public class ShopState implements GameState {
     private GameContext context;
+    private GameState currentState;                                                 // For testing
     private List<Item> items;
     private List<Weapon> boughtWeapons; // List to store bought weapons
 
@@ -21,6 +22,22 @@ class ShopState implements GameState {
         this.items = new ArrayList<>();
         this.boughtWeapons = new ArrayList<>(); // Initialize bought weapons list
         generateItems();
+    }
+
+    /**
+     * Set the current state of the game.
+     * @param state The new state to set.
+     */
+    public void setState(GameState state) {                                      // For testing
+        this.currentState = state;
+    }
+
+    /**
+     * Get the current state of the game.
+     * @return The current game state.
+     */
+    public GameState getCurrentState() {                                         // For testing
+        return currentState;
     }
 
     private void generateItems() {

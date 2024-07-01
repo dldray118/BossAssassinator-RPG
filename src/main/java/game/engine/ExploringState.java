@@ -5,7 +5,7 @@ import java.util.Scanner;
 /**
  * ExploringState class handles the exploration phase of the game.
  */
-class ExploringState implements GameState {
+public class ExploringState implements GameState {
     private GameContext context;
 
     public ExploringState(GameContext context) {

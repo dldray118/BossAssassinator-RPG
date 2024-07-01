@@ -70,4 +70,9 @@ public class BasicFighter implements Fighter {
         health -= damage;
         System.out.println(name + " takes " + damage + " damage, health is now " + health);
     }
+
+    @Override
+    public String getSkills() {
+        return "";
+    }
 }
