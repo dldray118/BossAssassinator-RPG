@@ -18,7 +18,7 @@ public class Skill2Decorator extends FighterDecorator {
         decoratedFighter.attack(enemy);
         System.out.println("Using skill: Nunchuck Strike");
         int totalDamage = 10; // Base damage
-        totalDamage += 10; // Level 2 skill extra damage
+        totalDamage += 15; // Level 2 skill extra damage
         enemy.setHealth(enemy.getHealth() - totalDamage);
         System.out.println("Enemy takes " + totalDamage + " damage, health is now " + enemy.getHealth());
     }
@@ -35,7 +35,7 @@ public class Skill2Decorator extends FighterDecorator {
 
     @Override
     public String getName() {
-        return decoratedFighter.getName() + " with Skill 2";
+        return decoratedFighter.getName();
     }
 
     @Override
@@ -56,5 +56,10 @@ public class Skill2Decorator extends FighterDecorator {
     @Override
     public String getSkills() {
         return decoratedFighter.getSkills() + "Nunchuck Strike ";
+    }
+
+    @Override
+    public int getMaxHealth() {
+        return 100;
     }
 }

@@ -15,4 +15,5 @@ public interface Fighter {
     void setHealth(int health);
     void takeDamage(int damage);
     String getSkills();
+    int getMaxHealth();
 }

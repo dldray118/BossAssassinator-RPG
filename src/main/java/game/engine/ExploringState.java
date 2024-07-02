@@ -23,7 +23,8 @@ public class ExploringState implements GameState {
             scanner.nextLine();
         }
 
-        if (context.getRandom().nextInt(10) < 8) { // Adjusted for more chances to encounter an enemy
+        if (context.getRandom().nextInt(10) < 6) { // Adjusted for more chances to encounter an
+            // enemy
             context.setState(new CombatState(context, 0)); // Start with enemyLevel 0
         } else {
             context.setState(new ShopState(context));

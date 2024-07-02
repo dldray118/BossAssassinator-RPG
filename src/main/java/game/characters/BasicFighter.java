@@ -6,6 +6,7 @@ import java.util.List;
 
 public class BasicFighter implements Fighter {
     private int health = 100;
+    private final int MAX_HEALTH = 100;
     private List<Weapon> weapons = new ArrayList<>();
     private List<String> skills = new ArrayList<>();
     private String name;
@@ -23,7 +24,7 @@ public class BasicFighter implements Fighter {
                 totalDamage += weapon.getDamage();
             }
         } else {
-            System.out.println(name + " attacks with basic skills!");
+            System.out.println(name + " attacks with punches!");
         }
         for (String skill : skills) {
             System.out.println("Using skill: " + skill);
@@ -31,8 +32,6 @@ public class BasicFighter implements Fighter {
                 totalDamage += 5;
             } else if (skill.equals("Nunchuck Strike")) {
                 totalDamage += 10;
-            } else if (skill.equals("Ultimate Destruction")) {
-                totalDamage += 20;
             }
         }
         int enemyHealth = enemy.getHealth() - totalDamage;
@@ -74,5 +73,10 @@ public class BasicFighter implements Fighter {
     @Override
     public String getSkills() {
         return "";
+    }
+
+    @Override
+    public int getMaxHealth(){
+        return MAX_HEALTH;
     }
 }

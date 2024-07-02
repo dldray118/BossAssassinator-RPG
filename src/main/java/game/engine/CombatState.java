@@ -33,6 +33,13 @@ public class CombatState implements GameState {
 
     @Override
     public void handle() {
+
+        if (context.getRandom().nextInt(10) < 6) { // Adjusted for more chances to encounter an
+            // enemy
+            context.setState(new CombatState(context, 0)); // Start with enemyLevel 0
+        } else {
+            context.setState(new ShopState(context));
+        }
         System.out.println("Entering combat...");
 
         // Combat logic
@@ -81,6 +88,7 @@ public class CombatState implements GameState {
 
 
     private void levelUpSkills() {
+        BossEnemy finalBoss = new BossEnemy();
         switch (enemyLevel) {
             case 0:
                 bossAssassinator = new Skill1Decorator(bossAssassinator);
@@ -88,12 +96,12 @@ public class CombatState implements GameState {
             case 1:
                 bossAssassinator = new Skill2Decorator(bossAssassinator);
                 break;
-            case 2:
-                bossAssassinator = new FinalSkillDecorator(bossAssassinator);
-                break;
         }
         context.setBossAssassinator(bossAssassinator); // Update context with the leveled-up bossAssassinator
         System.out.println("Boss Assassinator leveled up!");
+        if(finalBoss.getHealth() > 0){
+            System.out.println("Boss Assassinator now has " + bossAssassinator.getSkills());
+        }
     }
 
     public void setBossAssassinator(Fighter bossAssassinator) {
