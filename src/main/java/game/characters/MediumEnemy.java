@@ -10,7 +10,8 @@ public class MediumEnemy implements Enemy {
     @Override
     public void attack(Fighter fighter) {
         int damage = getDamage();
-        System.out.println(getName() + " attacks " + fighter.getName() + " for " + damage + " damage!");
+        System.out.println(getName() + " attacks "
+                                     + fighter.getName() + " for " + damage + " damage!");
         fighter.takeDamage(damage);
     }
 

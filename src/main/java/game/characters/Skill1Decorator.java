@@ -20,7 +20,8 @@ public class Skill1Decorator extends FighterDecorator {
         int totalDamage = 10; // Base damage
         totalDamage += 5; // Level 1 skill extra damage
         enemy.setHealth(enemy.getHealth() - totalDamage);
-        System.out.println("Enemy takes " + totalDamage + " damage, health is now " + enemy.getHealth());
+        System.out.println("Enemy takes " + totalDamage + " damage, health is now "
+                                          + enemy.getHealth());
     }
 
     @Override

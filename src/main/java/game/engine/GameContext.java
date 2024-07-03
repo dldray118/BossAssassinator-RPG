@@ -16,6 +16,13 @@ public class GameContext {
     private Scanner scanner;
     private boolean isInteractive;
 
+    /**
+     * Constructs a new GameContext object.
+     * This constructor initializes the game state to ExploringState,
+     * creates a basic fighter named "Boss Assassinator",
+     * and initializes the random number generator
+     * and the scanner for user input.
+     */
     public GameContext() {
         this.currentState = new ExploringState(this);
         this.bossAssassinator = new BasicFighter("Boss Assassinator");

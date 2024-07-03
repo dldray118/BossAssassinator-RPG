@@ -6,7 +6,7 @@ import java.util.List;
 
 public class BasicFighter implements Fighter {
     private int health = 100;
-    private final int MAX_HEALTH = 100;
+    private static final int MAX_HEALTH = 100;
     private List<Weapon> weapons = new ArrayList<>();
     private List<String> skills = new ArrayList<>();
     private String name;
@@ -76,7 +76,7 @@ public class BasicFighter implements Fighter {
     }
 
     @Override
-    public int getMaxHealth(){
+    public int getMaxHealth() {
         return MAX_HEALTH;
     }
 }
