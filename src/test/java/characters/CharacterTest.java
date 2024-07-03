@@ -27,7 +27,6 @@ public class CharacterTest {
     @Test
     public void testSkill1Decorator() {
         Fighter skill1Fighter = new Skill1Decorator(basicFighter);
-        //assertEquals("Test Fighter with Skill 1", skill1Fighter.getName());
         assertTrue(skill1Fighter.getSkills().contains("Flying Roundhouse Kick"));
     }
 
@@ -37,7 +36,6 @@ public class CharacterTest {
     @Test
     public void testSkill2Decorator() {
         Fighter skill2Fighter = new Skill2Decorator(basicFighter);
-        //assertEquals("Test Fighter with Skill 2", skill2Fighter.getName());
         assertTrue(skill2Fighter.getSkills().contains("Nunchuck Strike"));
     }
 

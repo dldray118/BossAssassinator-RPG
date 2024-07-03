@@ -23,6 +23,7 @@ public class GameContext {
      * and initializes the random number generator
      * and the scanner for user input.
      */
+
     public GameContext() {
         this.currentState = new ExploringState(this);
         this.bossAssassinator = new BasicFighter("Boss Assassinator");
