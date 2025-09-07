@@ -1,4 +1,15 @@
-.gradle
+# Ignore Gradle files
+.gradle/
 build/
+.gradle-wrapper.jar
+
+# Ignore IDE settings
 .idea/
+*.iml
+
+# Ignore macOS clutter
 .DS_Store
+
+# Ignore compiled Java files
+*.class
+*.log
