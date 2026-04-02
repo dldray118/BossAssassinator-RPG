@@ -1,26 +1,4 @@
-//plugins {          Came with build
-//    id("java")
-//}
-//
-//group = "org.example"
-//version = "1.0-SNAPSHOT"
-//
-//repositories {
-//    mavenCentral()
-//}
-//
-//dependencies {
-//    testImplementation(platform("org.junit:junit-bom:5.10.0"))
-//    testImplementation("org.junit.jupiter:junit-jupiter")
-//}
-//
-//tasks.test {
-//    useJUnitPlatform()
-//}
-
-
-
-// Gradle build given in assignment 3
+// Boss Assassinator RPG — Groovy Gradle build (course assignment baseline + quality plugins).
 plugins {
     id "com.github.spotbugs" version "5.0.12"
     id "checkstyle"
@@ -37,18 +15,18 @@ run {
     standardInput = System.in
 }
 
-// In this section you declare where to find the dependencies of your project
+// Maven Central replaces deprecated jcenter; keeps dependency resolution reproducible.
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
-// In this section you declare the dependencies for your production and test code
+// JUnit 4 scoped to tests only — not bundled with production bytecode.
 dependencies {
-    implementation "junit:junit:4.12"
+    testImplementation "junit:junit:4.13.2"
 }
 
 jacocoTestReport {
-    dependsOn test // tests are required to run before generating the report
+    dependsOn test // report runs after test task completes
 }
 jacoco {
     toolVersion = "0.8.8"
@@ -65,15 +43,14 @@ jacocoTestReport {
 
 apply plugin: 'checkstyle'
 checkstyle {
-    // Keep checkstyle a little quieter
+    // Non-blocking: report issues without failing the build during local runs.
     ignoreFailures = true
     showViolations = false
 }
 
 tasks.withType(Checkstyle) {
     reports {
-    //    html.enabled = true                                   // Why don't these work.
-     //   xml.enabled = false
+        // Report toggles vary by Checkstyle/Gradle version; enable in IDE or CI if needed.
     }
 }
 checkstyle {
@@ -84,9 +61,9 @@ checkstyle {
 
 
 ///////////////////////////////////////////////////////////////////////
-// Configure SpotBugs
+// SpotBugs — static analysis on main sources
 ///////////////////////////////////////////////////////////////////////
-// To generate an HTML report instead of XML
+// Prefer HTML report for local inspection; XML optional for tooling.
 spotbugsMain {
     reports {
         xml.enabled = false
