@@ -1,0 +1,3 @@
+# Wrapper scripts: LF required for Unix shebang; avoids "cannot execute" on Linux/macOS CI.
+gradlew text eol=lf
+gradlew.bat text eol=crlf
