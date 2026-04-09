@@ -15,6 +15,7 @@ public class GameContext {
     private Random random;
     private Scanner scanner;
     private boolean isInteractive;
+    private PlayerCommandSource playerCommands;
 
     /**
      * Constructs a new GameContext object.
@@ -29,6 +30,22 @@ public class GameContext {
         this.currentState = new ExploringState(this);
         this.random = new Random();
         this.scanner = new Scanner(System.in);
+        this.playerCommands = new RandomPlayerCommandSource(this.random);
+    }
+
+    /**
+     * Get the active command source (intents for shop, combat, exploration).
+     * @return The command source.
+     */
+    public PlayerCommandSource getPlayerCommands() {
+        return playerCommands;
+    }
+
+    /**
+     * @param playerCommands command source for shop, combat, and exploration
+     */
+    public void setPlayerCommands(PlayerCommandSource playerCommands) {
+        this.playerCommands = playerCommands;
     }
 
     /**
