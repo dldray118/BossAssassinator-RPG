@@ -1,3 +1,3 @@
-# Wrapper scripts: LF required for Unix shebang; avoids "cannot execute" on Linux/macOS CI.
+# gradlew must use LF so the #!/bin/sh shebang works on Unix (CRLF breaks execution).
 gradlew text eol=lf
 gradlew.bat text eol=crlf
