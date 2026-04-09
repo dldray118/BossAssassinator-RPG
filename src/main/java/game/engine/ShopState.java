@@ -8,7 +8,6 @@ import game.items.Weapon;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * The ShopState class handles the shop phase of the game.
@@ -69,18 +68,12 @@ public class ShopState implements GameState {
         System.out.println("Entering a shop...");
         displayItems();
 
-        if (context.isInteractive()) {
-            Scanner scanner = context.getScanner();
-            System.out.println("Choose an item to buy (1-4) or 0 to leave:");
-            int choice = scanner.nextInt();
-            if (choice > 0 && choice <= items.size()) {
-                Item selectedItem = items.get(choice - 1);
-                applyPurchaseWithFeedback(selectedItem);
+        ShopIntent intent = context.getPlayerCommands().nextShopIntent(items.size());
+        if (!intent.isLeave()) {
+            int idx = intent.getItemIndexOneBased();
+            if (idx >= 1 && idx <= items.size()) {
+                applyPurchaseWithFeedback(items.get(idx - 1));
             }
-        } else {
-            // Automatic selection for testing purposes
-            Item selectedItem = items.get(context.getRandom().nextInt(items.size()));
-            applyPurchaseWithFeedback(selectedItem);
         }
 
         context.getSession().getFighter().setWeapons(boughtWeapons);

@@ -4,8 +4,6 @@ import game.characters.*;
 import game.domain.CombatProgress;
 import game.domain.CombatRules;
 
-import java.util.Scanner;
-
 /**
  * The CombatState class handles the combat phase of the game.
  * Players will engage in battles with different types of enemies.
@@ -97,9 +95,7 @@ public class CombatState implements GameState {
         while (CombatRules.combatOngoing(bossAssassinator, enemy)) {
             CombatRules.exchangeRound(bossAssassinator, enemy);
             if (context.isInteractive() && CombatRules.combatOngoing(bossAssassinator, enemy)) {
-                Scanner scanner = context.getScanner();
-                System.out.println("Press enter to continue...");
-                scanner.nextLine();
+                context.getPlayerCommands().nextCombatStepIntent();
             }
         }
 
