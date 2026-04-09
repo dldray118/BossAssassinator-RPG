@@ -1,6 +1,9 @@
 package game.engine;
 
 import game.characters.*;
+import game.domain.CombatProgress;
+import game.domain.CombatRules;
+
 import java.util.Scanner;
 
 /**
@@ -91,20 +94,16 @@ public class CombatState implements GameState {
      * @return {@code true} if the enemy is defeated, false otherwise
      */
     private boolean fight(Enemy enemy) {
-        while (bossAssassinator.getHealth() > 0 && enemy.getHealth() > 0) {
-            bossAssassinator.attack(enemy);
-            if (enemy.getHealth() > 0) {
-                enemy.attack(bossAssassinator);
-            }
-            // Pause for user input if interactive mode
-            if (context.isInteractive()) {
+        while (CombatRules.combatOngoing(bossAssassinator, enemy)) {
+            CombatRules.exchangeRound(bossAssassinator, enemy);
+            if (context.isInteractive() && CombatRules.combatOngoing(bossAssassinator, enemy)) {
                 Scanner scanner = context.getScanner();
                 System.out.println("Press enter to continue...");
                 scanner.nextLine();
             }
         }
 
-        boolean isEnemyDefeated = enemy.getHealth() <= 0;
+        boolean isEnemyDefeated = CombatRules.enemyDefeated(enemy);
 
         if (!isEnemyDefeated && enemyLevel == 2) {
             System.out.println("Using leveled up skills!");
@@ -118,18 +117,7 @@ public class CombatState implements GameState {
      * Updates the context with the leveled-up Boss Assassinator.
      */
     private void levelUpSkills() {
-
-        switch (enemyLevel) {
-            case 0:
-                bossAssassinator = new Skill1Decorator(bossAssassinator);
-                break;
-            case 1:
-                bossAssassinator = new Skill2Decorator(bossAssassinator);
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown enemy level: " + enemyLevel);
-        }
-        // Update context with the leveled-up bossAssassinator
+        bossAssassinator = CombatProgress.applySkillForDefeatedTier(bossAssassinator, enemyLevel);
         context.setBossAssassinator(bossAssassinator);
         System.out.println("Boss Assassinator leveled up!");
 
