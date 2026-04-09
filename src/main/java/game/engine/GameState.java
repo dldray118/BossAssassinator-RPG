@@ -6,9 +6,8 @@ package game.engine;
  * <p>Implementations should follow: player input (if any), phase logic, then at most one
  * {@link GameContext#setState(GameState)} to the next phase.
  *
- * <p>Graph: {@link ExploringState} to {@link CombatState} or {@link ShopState};
- * {@link ShopState} to {@link ExploringState}; {@link CombatState} to the next
- * {@link CombatState} or {@link GameOverState} from fight outcome.
+ * <p>Where to go next after each beat is defined by {@link game.scenario.ScenarioPlan}
+ * (see {@link game.scenario.DefaultScenarioPlan}).
  */
 public interface GameState {
     void handle();

@@ -1,5 +1,7 @@
 package game.engine;
 
+import game.scenario.ScenarioPlan;
+
 /**
  * ExploringState class handles the exploration phase of the game.
  */
@@ -24,14 +26,9 @@ public class ExploringState implements GameState {
         goCombatOrShopFromExplore();
     }
 
-    /** Single random roll for explore: ~60% combat (tier 0), else shop. */
+    /** Delegates branch to {@link ScenarioPlan#nextAfterExplore(GameContext)}. */
     private void goCombatOrShopFromExplore() {
-        if (context.getRandom().nextInt(10) < 6) {
-            context.getSession().setEnemyLevel(0);
-            context.setState(new CombatState(context));
-        } else {
-            context.setState(new ShopState(context));
-        }
+        context.setState(context.getSession().getScenarioPlan().nextAfterExplore(context));
     }
 }
 
