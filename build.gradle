@@ -1,4 +1,4 @@
-// Boss Assassinator RPG — Groovy Gradle build (course assignment baseline + quality plugins).
+// Gradle build given in assignment 3
 plugins {
     id "com.github.spotbugs" version "5.0.12"
     id "checkstyle"
@@ -15,18 +15,18 @@ run {
     standardInput = System.in
 }
 
-// Maven Central replaces deprecated jcenter; keeps dependency resolution reproducible.
+// mavenCentral: jcenter is deprecated and unmaintained.
 repositories {
     mavenCentral()
 }
 
-// JUnit 4 scoped to tests only — not bundled with production bytecode.
+// JUnit 4 on the test classpath only.
 dependencies {
     testImplementation "junit:junit:4.13.2"
 }
 
 jacocoTestReport {
-    dependsOn test // report runs after test task completes
+    dependsOn test // tests are required to run before generating the report
 }
 jacoco {
     toolVersion = "0.8.8"
@@ -43,14 +43,15 @@ jacocoTestReport {
 
 apply plugin: 'checkstyle'
 checkstyle {
-    // Non-blocking: report issues without failing the build during local runs.
+    // Keep checkstyle a little quieter
     ignoreFailures = true
     showViolations = false
 }
 
 tasks.withType(Checkstyle) {
     reports {
-        // Report toggles vary by Checkstyle/Gradle version; enable in IDE or CI if needed.
+    //    html.enabled = true
+    //    xml.enabled = false
     }
 }
 checkstyle {
@@ -61,9 +62,9 @@ checkstyle {
 
 
 ///////////////////////////////////////////////////////////////////////
-// SpotBugs — static analysis on main sources
+// Configure SpotBugs
 ///////////////////////////////////////////////////////////////////////
-// Prefer HTML report for local inspection; XML optional for tooling.
+// To generate an HTML report instead of XML
 spotbugsMain {
     reports {
         xml.enabled = false
