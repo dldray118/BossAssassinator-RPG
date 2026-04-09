@@ -1,3 +1,4 @@
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -27,6 +28,11 @@ public class GameContextTest {
     @Test
     public void testInitialState() {
         assertTrue(gameContext.getCurrentState() instanceof ExploringState);
+    }
+
+    @Test
+    public void testPlayerCommandsDefaulted() {
+        assertNotNull(gameContext.getPlayerCommands());
     }
 
     /**
