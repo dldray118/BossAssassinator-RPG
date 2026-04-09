@@ -32,19 +32,7 @@ public class CombatState implements GameState {
      * Spawns a new enemy based on the current enemy level.
      */
     private void spawnEnemy() {
-        switch (enemyLevel) {
-            case 0:
-                currentEnemy = new SmallEnemy();
-                break;
-            case 1:
-                currentEnemy = new MediumEnemy();
-                break;
-            case 2:
-                currentEnemy = new BossEnemy();
-                break;
-            default:
-                System.out.println("Current enemy is: " + currentEnemy);
-        }
+        currentEnemy = EnemyFactory.createForTier(enemyLevel);
     }
 
     /**
@@ -117,7 +105,7 @@ public class CombatState implements GameState {
         context.setBossAssassinator(bossAssassinator);
         System.out.println("Boss Assassinator leveled up!");
 
-        BossEnemy finalBoss = new BossEnemy();
+        Enemy finalBoss = EnemyFactory.createForTier(2);
         if (finalBoss.getHealth() > 0) {
             System.out.println("Boss Assassinator now has " + bossAssassinator.getSkills());
         }

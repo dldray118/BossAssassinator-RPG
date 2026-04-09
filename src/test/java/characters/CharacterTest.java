@@ -78,4 +78,16 @@ public class CharacterTest {
     public void testCreateInvalidEnemy() {
         assertThrows(IllegalArgumentException.class, () -> EnemyFactory.createEnemy("invalid"));
     }
+
+    @Test
+    public void testCreateForTierMatchesSmall() {
+        Enemy e = EnemyFactory.createForTier(0);
+        assertTrue(e instanceof SmallEnemy);
+        assertEquals("Small Enemy", e.getName());
+    }
+
+    @Test
+    public void testCreateForTierInvalid() {
+        assertThrows(IllegalArgumentException.class, () -> EnemyFactory.createForTier(99));
+    }
 }
