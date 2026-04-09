@@ -15,16 +15,15 @@ public class CombatState implements GameState {
     private int enemyLevel; // 0 for small, 1 for medium, 2 for final boss
 
     /**
-     * Constructs a new CombatState with the specified game context and enemy level.
-     * Initializes the current enemy based on the enemy level.
+     * Constructs a new CombatState with the specified game context.
+     * Fighter and enemy tier are taken from {@code context.getSession()}.
      *
      * @param context the game context
-     * @param enemyLevel the current enemy level
      */
-    public CombatState(GameContext context, int enemyLevel) {
+    public CombatState(GameContext context) {
         this.context = context;
-        this.bossAssassinator = context.getBossAssassinator(); // Get the existing Boss Assassinator
-        this.enemyLevel = enemyLevel; // Initialize with the current enemy level
+        this.bossAssassinator = context.getSession().getFighter();
+        this.enemyLevel = context.getSession().getEnemyLevel();
         spawnEnemy();
     }
 
@@ -56,7 +55,8 @@ public class CombatState implements GameState {
 
         if (context.getRandom().nextInt(10) < 6) { //Adjusted for more chances to encounter
             // an enemy
-            context.setState(new CombatState(context, 0)); // Start with enemyLevel 0
+            context.getSession().setEnemyLevel(0);
+            context.setState(new CombatState(context));
         } else {
             context.setState(new ShopState(context));
         }
@@ -68,6 +68,7 @@ public class CombatState implements GameState {
         if (isEnemyDefeated) {
             levelUpSkills();
             enemyLevel++;
+            context.getSession().setEnemyLevel(enemyLevel);
             if (enemyLevel > 2) {
                 System.out.println("Final Boss defeated!");
                 context.setState(new GameOverState(context));
@@ -75,8 +76,7 @@ public class CombatState implements GameState {
                 System.out.println("Enemy defeated. Moving to the next level.");
                 System.out.println();
                 spawnEnemy();
-                // Pass the updated enemy level
-                context.setState(new CombatState(context, enemyLevel));
+                context.setState(new CombatState(context));
             }
         } else {
             System.out.println("Boss Assassinator defeated.");

@@ -82,9 +82,7 @@ public class ShopState implements GameState {
             useItem(selectedItem);
         }
 
-        // Set bought weapons to BossAssassinator in CombatState
-        CombatState combatState = new CombatState(context, 0);// Pass initial enemyLevel 0
-        combatState.getBossAssassinator().setWeapons(boughtWeapons);
+        context.getSession().getFighter().setWeapons(boughtWeapons);
 
         System.out.println("Leaving the shop.");
         context.setState(new ExploringState(context));
