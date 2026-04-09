@@ -1,11 +1,9 @@
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.*;
 
 import game.engine.*;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Unit tests for the GameContext class.
@@ -17,7 +15,7 @@ public class GameContextTest {
     /**
      * Sets up the test environment before each test.
      */
-    @BeforeEach
+    @Before
     public void setUp() {
         gameContext = new GameContext();
     }
@@ -30,27 +28,13 @@ public class GameContextTest {
         assertTrue(gameContext.getCurrentState() instanceof ExploringState);
     }
 
-    @Test
-    public void testPlayerCommandsDefaulted() {
-        assertNotNull(gameContext.getPlayerCommands());
-    }
-
     /**
      * Tests the transition to CombatState.
      */
     @Test
     public void testStateTransitionToCombat() {
-        gameContext.getSession().setEnemyLevel(0);
-        gameContext.setState(new CombatState(gameContext));
+        gameContext.setState(new CombatState(gameContext, 0));
         assertTrue(gameContext.getCurrentState() instanceof CombatState);
-    }
-
-    /**
-     * Tests that getBossAssassinator and getSession().getFighter() refer to the same instance.
-     */
-    @Test
-    public void testSessionFighterMatchesContext() {
-        assertSame(gameContext.getBossAssassinator(), gameContext.getSession().getFighter());
     }
 
     /**

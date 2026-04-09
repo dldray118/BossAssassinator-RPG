@@ -17,7 +17,7 @@ public class Main {
      */
     public static void main(String[] args) {
         GameContext game = new GameContext();
-        Scanner scanner = game.getScanner();
+        Scanner scanner = new Scanner(System.in);
 
         System.out.println("Welcome to the Boss Assassinator RPG Game!");
         System.out.println("Choose an option:");
@@ -25,14 +25,11 @@ public class Main {
         System.out.println("2. Run automatically");
 
         int choice = scanner.nextInt();
-        scanner.nextLine();
 
         if (choice == 1) {
             game.setInteractive(true);
-            game.setPlayerCommands(new ScannerPlayerCommandSource(game.getScanner()));
         } else {
             game.setInteractive(false);
-            game.setPlayerCommands(new RandomPlayerCommandSource(game.getRandom()));
         }
 
         game.startGame();

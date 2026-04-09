@@ -1,13 +1,13 @@
 package game.engine;
 
 import game.characters.Fighter;
-import game.domain.ShopPurchase;
 import game.items.Item;
 import game.items.Potion;
 import game.items.Weapon;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * The ShopState class handles the shop phase of the game.
@@ -68,26 +68,46 @@ public class ShopState implements GameState {
         System.out.println("Entering a shop...");
         displayItems();
 
-        ShopIntent intent = context.getPlayerCommands().nextShopIntent(items.size());
-        if (!intent.isLeave()) {
-            int idx = intent.getItemIndexOneBased();
-            if (idx >= 1 && idx <= items.size()) {
-                applyPurchaseWithFeedback(items.get(idx - 1));
+        if (context.isInteractive()) {
+            Scanner scanner = context.getScanner();
+            System.out.println("Choose an item to buy (1-4) or 0 to leave:");
+            int choice = scanner.nextInt();
+            if (choice > 0 && choice <= items.size()) {
+                Item selectedItem = items.get(choice - 1);
+                useItem(selectedItem);
             }
+        } else {
+            // Automatic selection for testing purposes
+            Item selectedItem = items.get(context.getRandom().nextInt(items.size()));
+            useItem(selectedItem);
         }
 
-        context.getSession().getFighter().setWeapons(boughtWeapons);
+        // Set bought weapons to BossAssassinator in CombatState
+        CombatState combatState = new CombatState(context, 0);// Pass initial enemyLevel 0
+        combatState.getBossAssassinator().setWeapons(boughtWeapons);
 
         System.out.println("Leaving the shop.");
         context.setState(new ExploringState(context));
     }
 
-    /** Applies {@link ShopPurchase}; console output stays in this state. */
-    private void applyPurchaseWithFeedback(Item item) {
-        Fighter fighter = context.getBossAssassinator();
-        ShopPurchase.Outcome outcome = ShopPurchase.apply(fighter, item, boughtWeapons);
-        if (outcome == ShopPurchase.Outcome.POTION_NOT_NEEDED) {
-            System.out.println("Health is already full. Potion not used.");
+    /**
+     * Uses the specified item. If the item is a potion, it heals the fighter.
+     * If the item is a weapon, it adds the weapon to the list of bought weapons.
+     *
+     * @param item the item to use
+     */
+    private void useItem(Item item) {
+        if (item instanceof Potion) {
+            Fighter bossAssassinator = context.getBossAssassinator();
+            if (bossAssassinator.getHealth() < bossAssassinator.getMaxHealth()) {
+                item.use();
+                bossAssassinator.setHealth(100);
+            } else {
+                System.out.println("Health is already full. Potion not used.");
+            }
+        } else if (item instanceof Weapon) {
+            item.use();
+            boughtWeapons.add((Weapon) item); // Add to bought weapons if it's a weapon
         } else {
             item.use();
         }

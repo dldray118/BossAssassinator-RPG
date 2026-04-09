@@ -1,5 +1,7 @@
 package game.engine;
 
+import java.util.Scanner;
+
 /**
  * ExploringState class handles the exploration phase of the game.
  */
@@ -14,14 +16,16 @@ public class ExploringState implements GameState {
     public void handle() {
         System.out.println("Exploring the city...");
 
+        // Pause for user input if interactive mode
         if (context.isInteractive()) {
-            context.getPlayerCommands().nextExploringIntent();
+            Scanner scanner = context.getScanner();
+            System.out.println("Press enter to continue exploring...");
+            scanner.nextLine();
         }
 
         if (context.getRandom().nextInt(10) < 6) { // Adjusted for more chances to encounter an
             // enemy
-            context.getSession().setEnemyLevel(0);
-            context.setState(new CombatState(context));
+            context.setState(new CombatState(context, 0)); // Start with enemyLevel 0
         } else {
             context.setState(new ShopState(context));
         }

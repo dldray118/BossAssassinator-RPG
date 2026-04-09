@@ -1,3 +1,25 @@
+//plugins {          Came with build
+//    id("java")
+//}
+//
+//group = "org.example"
+//version = "1.0-SNAPSHOT"
+//
+//repositories {
+//    mavenCentral()
+//}
+//
+//dependencies {
+//    testImplementation(platform("org.junit:junit-bom:5.10.0"))
+//    testImplementation("org.junit.jupiter:junit-jupiter")
+//}
+//
+//tasks.test {
+//    useJUnitPlatform()
+//}
+
+
+
 // Gradle build given in assignment 3
 plugins {
     id "com.github.spotbugs" version "5.0.12"
@@ -15,19 +37,14 @@ run {
     standardInput = System.in
 }
 
-// mavenCentral: jcenter is deprecated and unmaintained.
+// In this section you declare where to find the dependencies of your project
 repositories {
-    mavenCentral()
+    jcenter()
 }
 
-// JUnit 5 on the test classpath only (BOM + Jupiter).
+// In this section you declare the dependencies for your production and test code
 dependencies {
-    testImplementation platform("org.junit:junit-bom:5.10.2")
-    testImplementation "org.junit.jupiter:junit-jupiter"
-}
-
-test {
-    useJUnitPlatform()
+    implementation "junit:junit:4.12"
 }
 
 jacocoTestReport {
@@ -55,8 +72,8 @@ checkstyle {
 
 tasks.withType(Checkstyle) {
     reports {
-    //    html.enabled = true
-    //    xml.enabled = false
+    //    html.enabled = true                                   // Why don't these work.
+     //   xml.enabled = false
     }
 }
 checkstyle {

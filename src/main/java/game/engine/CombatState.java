@@ -1,8 +1,7 @@
 package game.engine;
 
 import game.characters.*;
-import game.domain.CombatProgress;
-import game.domain.CombatRules;
+import java.util.Scanner;
 
 /**
  * The CombatState class handles the combat phase of the game.
@@ -16,15 +15,16 @@ public class CombatState implements GameState {
     private int enemyLevel; // 0 for small, 1 for medium, 2 for final boss
 
     /**
-     * Constructs a new CombatState with the specified game context.
-     * Fighter and enemy tier are taken from {@code context.getSession()}.
+     * Constructs a new CombatState with the specified game context and enemy level.
+     * Initializes the current enemy based on the enemy level.
      *
      * @param context the game context
+     * @param enemyLevel the current enemy level
      */
-    public CombatState(GameContext context) {
+    public CombatState(GameContext context, int enemyLevel) {
         this.context = context;
-        this.bossAssassinator = context.getSession().getFighter();
-        this.enemyLevel = context.getSession().getEnemyLevel();
+        this.bossAssassinator = context.getBossAssassinator(); // Get the existing Boss Assassinator
+        this.enemyLevel = enemyLevel; // Initialize with the current enemy level
         spawnEnemy();
     }
 
@@ -56,8 +56,7 @@ public class CombatState implements GameState {
 
         if (context.getRandom().nextInt(10) < 6) { //Adjusted for more chances to encounter
             // an enemy
-            context.getSession().setEnemyLevel(0);
-            context.setState(new CombatState(context));
+            context.setState(new CombatState(context, 0)); // Start with enemyLevel 0
         } else {
             context.setState(new ShopState(context));
         }
@@ -69,7 +68,6 @@ public class CombatState implements GameState {
         if (isEnemyDefeated) {
             levelUpSkills();
             enemyLevel++;
-            context.getSession().setEnemyLevel(enemyLevel);
             if (enemyLevel > 2) {
                 System.out.println("Final Boss defeated!");
                 context.setState(new GameOverState(context));
@@ -77,7 +75,8 @@ public class CombatState implements GameState {
                 System.out.println("Enemy defeated. Moving to the next level.");
                 System.out.println();
                 spawnEnemy();
-                context.setState(new CombatState(context));
+                // Pass the updated enemy level
+                context.setState(new CombatState(context, enemyLevel));
             }
         } else {
             System.out.println("Boss Assassinator defeated.");
@@ -92,14 +91,20 @@ public class CombatState implements GameState {
      * @return {@code true} if the enemy is defeated, false otherwise
      */
     private boolean fight(Enemy enemy) {
-        while (CombatRules.combatOngoing(bossAssassinator, enemy)) {
-            CombatRules.exchangeRound(bossAssassinator, enemy);
-            if (context.isInteractive() && CombatRules.combatOngoing(bossAssassinator, enemy)) {
-                context.getPlayerCommands().nextCombatStepIntent();
+        while (bossAssassinator.getHealth() > 0 && enemy.getHealth() > 0) {
+            bossAssassinator.attack(enemy);
+            if (enemy.getHealth() > 0) {
+                enemy.attack(bossAssassinator);
+            }
+            // Pause for user input if interactive mode
+            if (context.isInteractive()) {
+                Scanner scanner = context.getScanner();
+                System.out.println("Press enter to continue...");
+                scanner.nextLine();
             }
         }
 
-        boolean isEnemyDefeated = CombatRules.enemyDefeated(enemy);
+        boolean isEnemyDefeated = enemy.getHealth() <= 0;
 
         if (!isEnemyDefeated && enemyLevel == 2) {
             System.out.println("Using leveled up skills!");
@@ -113,7 +118,18 @@ public class CombatState implements GameState {
      * Updates the context with the leveled-up Boss Assassinator.
      */
     private void levelUpSkills() {
-        bossAssassinator = CombatProgress.applySkillForDefeatedTier(bossAssassinator, enemyLevel);
+
+        switch (enemyLevel) {
+            case 0:
+                bossAssassinator = new Skill1Decorator(bossAssassinator);
+                break;
+            case 1:
+                bossAssassinator = new Skill2Decorator(bossAssassinator);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown enemy level: " + enemyLevel);
+        }
+        // Update context with the leveled-up bossAssassinator
         context.setBossAssassinator(bossAssassinator);
         System.out.println("Boss Assassinator leveled up!");
 

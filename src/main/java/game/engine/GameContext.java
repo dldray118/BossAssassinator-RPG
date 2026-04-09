@@ -11,11 +11,10 @@ import java.util.Scanner;
  */
 public class GameContext {
     private GameState currentState;
-    private GameSession session;
+    private Fighter bossAssassinator;
     private Random random;
     private Scanner scanner;
     private boolean isInteractive;
-    private PlayerCommandSource playerCommands;
 
     /**
      * Constructs a new GameContext object.
@@ -26,34 +25,10 @@ public class GameContext {
      */
 
     public GameContext() {
-        this.session = new GameSession(new BasicFighter("Boss Assassinator"));
         this.currentState = new ExploringState(this);
+        this.bossAssassinator = new BasicFighter("Boss Assassinator");
         this.random = new Random();
         this.scanner = new Scanner(System.in);
-        this.playerCommands = new RandomPlayerCommandSource(this.random);
-    }
-
-    /**
-     * Get the active command source (intents for shop, combat, exploration).
-     * @return The command source.
-     */
-    public PlayerCommandSource getPlayerCommands() {
-        return playerCommands;
-    }
-
-    /**
-     * @param playerCommands command source for shop, combat, and exploration
-     */
-    public void setPlayerCommands(PlayerCommandSource playerCommands) {
-        this.playerCommands = playerCommands;
-    }
-
-    /**
-     * Get the game session (fighter, enemy tier).
-     * @return The game session.
-     */
-    public GameSession getSession() {
-        return session;
     }
 
     /**
@@ -88,7 +63,7 @@ public class GameContext {
      * @return The main character.
      */
     public Fighter getBossAssassinator() {
-        return session.getFighter();
+        return bossAssassinator;
     }
 
     /**
@@ -96,7 +71,7 @@ public class GameContext {
      * @param bossAssassinator The main character to set.
      */
     public void setBossAssassinator(Fighter bossAssassinator) {
-        session.setFighter(bossAssassinator);
+        this.bossAssassinator = bossAssassinator;
     }
 
     /**
