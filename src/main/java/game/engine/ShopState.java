@@ -60,8 +60,7 @@ public class ShopState implements GameState {
     }
 
     /**
-     * Handles the shop state where players can buy items.
-     * Displays available items and processes user input for buying items.
+     * Display, shop intent and purchase, sync weapons, then return to exploration.
      */
     @Override
     public void handle() {

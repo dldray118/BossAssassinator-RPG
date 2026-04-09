@@ -10,6 +10,9 @@ public class ExploringState implements GameState {
         this.context = context;
     }
 
+    /**
+     * Message, optional explore intent, then one random branch to combat or shop.
+     */
     @Override
     public void handle() {
         System.out.println("Exploring the city...");
@@ -18,8 +21,12 @@ public class ExploringState implements GameState {
             context.getPlayerCommands().nextExploringIntent();
         }
 
-        if (context.getRandom().nextInt(10) < 6) { // Adjusted for more chances to encounter an
-            // enemy
+        goCombatOrShopFromExplore();
+    }
+
+    /** Single random roll for explore: ~60% combat (tier 0), else shop. */
+    private void goCombatOrShopFromExplore() {
+        if (context.getRandom().nextInt(10) < 6) {
             context.getSession().setEnemyLevel(0);
             context.setState(new CombatState(context));
         } else {
