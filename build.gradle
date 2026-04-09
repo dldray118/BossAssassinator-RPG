@@ -20,9 +20,14 @@ repositories {
     mavenCentral()
 }
 
-// JUnit 4 on the test classpath only.
+// JUnit 5 on the test classpath only (BOM + Jupiter).
 dependencies {
-    testImplementation "junit:junit:4.13.2"
+    testImplementation platform("org.junit:junit-bom:5.10.2")
+    testImplementation "org.junit.jupiter:junit-jupiter"
+}
+
+test {
+    useJUnitPlatform()
 }
 
 jacocoTestReport {

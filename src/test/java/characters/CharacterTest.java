@@ -1,10 +1,12 @@
 package characters;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import game.characters.*;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit tests for Fighter decorators and EnemyFactory.
@@ -16,7 +18,7 @@ public class CharacterTest {
     /**
      * Sets up the test environment before each test.
      */
-    @Before
+    @BeforeEach
     public void setUp() {
         basicFighter = new BasicFighter("Test Fighter");
     }
@@ -72,8 +74,8 @@ public class CharacterTest {
     /**
      * Tests the creation of an invalid enemy type.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testCreateInvalidEnemy() {
-        EnemyFactory.createEnemy("invalid");
+        assertThrows(IllegalArgumentException.class, () -> EnemyFactory.createEnemy("invalid"));
     }
 }
