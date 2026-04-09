@@ -25,7 +25,8 @@ public class ExploringState implements GameState {
 
         if (context.getRandom().nextInt(10) < 6) { // Adjusted for more chances to encounter an
             // enemy
-            context.setState(new CombatState(context, 0)); // Start with enemyLevel 0
+            context.getSession().setEnemyLevel(0);
+            context.setState(new CombatState(context));
         } else {
             context.setState(new ShopState(context));
         }

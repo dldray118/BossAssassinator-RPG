@@ -1,3 +1,4 @@
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import game.engine.*;
@@ -33,8 +34,17 @@ public class GameContextTest {
      */
     @Test
     public void testStateTransitionToCombat() {
-        gameContext.setState(new CombatState(gameContext, 0));
+        gameContext.getSession().setEnemyLevel(0);
+        gameContext.setState(new CombatState(gameContext));
         assertTrue(gameContext.getCurrentState() instanceof CombatState);
+    }
+
+    /**
+     * Tests that getBossAssassinator and getSession().getFighter() refer to the same instance.
+     */
+    @Test
+    public void testSessionFighterMatchesContext() {
+        assertSame(gameContext.getBossAssassinator(), gameContext.getSession().getFighter());
     }
 
     /**
