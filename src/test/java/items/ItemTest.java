@@ -1,11 +1,11 @@
 package items;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import game.items.Potion;
 import game.items.Weapon;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit tests for the Item subclasses Potion and Weapon.
@@ -18,7 +18,7 @@ public class ItemTest {
     /**
      * Sets up the test environment before each test.
      */
-    @Before
+    @BeforeEach
     public void setUp() {
         potion = new Potion("Health Potion", 50);
         weapon = new Weapon("Sword", 10);
