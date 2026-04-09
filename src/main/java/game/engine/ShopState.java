@@ -78,7 +78,7 @@ public class ShopState implements GameState {
         context.getSession().getFighter().setWeapons(boughtWeapons);
 
         System.out.println("Leaving the shop.");
-        context.setState(new ExploringState(context));
+        context.setState(context.getSession().getScenarioPlan().nextAfterShop(context));
     }
 
     /** Applies {@link ShopPurchase}; console output stays in this state. */

@@ -50,16 +50,16 @@ public class CombatState implements GameState {
             context.getSession().setEnemyLevel(enemyLevel);
             if (enemyLevel > 2) {
                 System.out.println("Final Boss defeated!");
-                context.setState(new GameOverState(context));
             } else {
                 System.out.println("Enemy defeated. Moving to the next level.");
                 System.out.println();
-                spawnEnemy();
-                context.setState(new CombatState(context));
             }
+            context.setState(
+                    context.getSession().getScenarioPlan().nextAfterCombatVictory(context, enemyLevel));
         } else {
             System.out.println("Boss Assassinator defeated.");
-            context.setState(new GameOverState(context));
+            context.setState(
+                    context.getSession().getScenarioPlan().nextAfterCombatDefeat(context));
         }
     }
 
