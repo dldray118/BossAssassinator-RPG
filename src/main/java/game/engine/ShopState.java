@@ -1,6 +1,7 @@
 package game.engine;
 
 import game.characters.Fighter;
+import game.domain.ShopPurchase;
 import game.items.Item;
 import game.items.Potion;
 import game.items.Weapon;
@@ -74,12 +75,12 @@ public class ShopState implements GameState {
             int choice = scanner.nextInt();
             if (choice > 0 && choice <= items.size()) {
                 Item selectedItem = items.get(choice - 1);
-                useItem(selectedItem);
+                applyPurchaseWithFeedback(selectedItem);
             }
         } else {
             // Automatic selection for testing purposes
             Item selectedItem = items.get(context.getRandom().nextInt(items.size()));
-            useItem(selectedItem);
+            applyPurchaseWithFeedback(selectedItem);
         }
 
         context.getSession().getFighter().setWeapons(boughtWeapons);
@@ -88,24 +89,12 @@ public class ShopState implements GameState {
         context.setState(new ExploringState(context));
     }
 
-    /**
-     * Uses the specified item. If the item is a potion, it heals the fighter.
-     * If the item is a weapon, it adds the weapon to the list of bought weapons.
-     *
-     * @param item the item to use
-     */
-    private void useItem(Item item) {
-        if (item instanceof Potion) {
-            Fighter bossAssassinator = context.getBossAssassinator();
-            if (bossAssassinator.getHealth() < bossAssassinator.getMaxHealth()) {
-                item.use();
-                bossAssassinator.setHealth(100);
-            } else {
-                System.out.println("Health is already full. Potion not used.");
-            }
-        } else if (item instanceof Weapon) {
-            item.use();
-            boughtWeapons.add((Weapon) item); // Add to bought weapons if it's a weapon
+    /** Applies {@link ShopPurchase}; console output stays in this state. */
+    private void applyPurchaseWithFeedback(Item item) {
+        Fighter fighter = context.getBossAssassinator();
+        ShopPurchase.Outcome outcome = ShopPurchase.apply(fighter, item, boughtWeapons);
+        if (outcome == ShopPurchase.Outcome.POTION_NOT_NEEDED) {
+            System.out.println("Health is already full. Potion not used.");
         } else {
             item.use();
         }
