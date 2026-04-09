@@ -2,17 +2,34 @@
 plugins {
     id "com.github.spotbugs" version "5.0.12"
     id "checkstyle"
+    id "org.openjfx.javafxplugin" version "0.1.0"
 }
 
 apply plugin: 'application'
 apply plugin: 'jacoco'
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
 
+javafx {
+    version = "17.0.11"
+    modules = ["javafx.controls", "javafx.graphics"]
+}
 
 mainClassName = 'game.engine.Main'
 
 run {
     standardInput = System.in
+}
+
+tasks.register("runGui", JavaExec) {
+    group = "application"
+    description = "Run JavaFX desktop UI"
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = "game.ui.BossAssassinatorApp"
 }
 
 // mavenCentral: jcenter is deprecated and unmaintained.
