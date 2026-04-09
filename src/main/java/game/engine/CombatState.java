@@ -36,22 +36,12 @@ public class CombatState implements GameState {
     }
 
     /**
-     * Handles the combat state, allowing players to engage in battles with enemies.
-     * The game state transitions based on the outcome of the battle.
+     * Announces combat, runs the fight, then sets the next state from the outcome only.
      */
     @Override
     public void handle() {
-
-        if (context.getRandom().nextInt(10) < 6) { //Adjusted for more chances to encounter
-            // an enemy
-            context.getSession().setEnemyLevel(0);
-            context.setState(new CombatState(context));
-        } else {
-            context.setState(new ShopState(context));
-        }
         System.out.println("Entering combat...");
 
-        // Combat logic
         boolean isEnemyDefeated = fight(currentEnemy);
 
         if (isEnemyDefeated) {

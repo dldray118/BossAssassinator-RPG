@@ -108,6 +108,13 @@ public class GameContext {
     }
 
     /**
+     * @param random RNG for exploration branching and other game randomness
+     */
+    public void setRandom(Random random) {
+        this.random = random;
+    }
+
+    /**
      * Get the scanner for user input.
      * @return The scanner for user input.
      */
