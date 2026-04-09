@@ -11,7 +11,7 @@ import java.util.Scanner;
  */
 public class GameContext {
     private GameState currentState;
-    private Fighter bossAssassinator;
+    private GameSession session;
     private Random random;
     private Scanner scanner;
     private boolean isInteractive;
@@ -25,10 +25,18 @@ public class GameContext {
      */
 
     public GameContext() {
+        this.session = new GameSession(new BasicFighter("Boss Assassinator"));
         this.currentState = new ExploringState(this);
-        this.bossAssassinator = new BasicFighter("Boss Assassinator");
         this.random = new Random();
         this.scanner = new Scanner(System.in);
+    }
+
+    /**
+     * Get the game session (fighter, enemy tier).
+     * @return The game session.
+     */
+    public GameSession getSession() {
+        return session;
     }
 
     /**
@@ -63,7 +71,7 @@ public class GameContext {
      * @return The main character.
      */
     public Fighter getBossAssassinator() {
-        return bossAssassinator;
+        return session.getFighter();
     }
 
     /**
@@ -71,7 +79,7 @@ public class GameContext {
      * @param bossAssassinator The main character to set.
      */
     public void setBossAssassinator(Fighter bossAssassinator) {
-        this.bossAssassinator = bossAssassinator;
+        session.setFighter(bossAssassinator);
     }
 
     /**
