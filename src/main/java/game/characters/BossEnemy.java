@@ -34,4 +34,9 @@ public class BossEnemy implements Enemy {
     public int getDamage() {
         return 20; // Boss enemy attack damage
     }
+
+    @Override
+    public int getMaxHealth() {
+        return 200;
+    }
 }

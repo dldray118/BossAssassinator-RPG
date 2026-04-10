@@ -7,6 +7,7 @@ import game.items.Potion;
 import game.items.Weapon;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -57,6 +58,15 @@ public class ShopState implements GameState {
         items.add(new Weapon("Gun", 15));
         items.add(new Weapon("Freeze Spell", 10));
         items.add(new Potion());
+    }
+
+    /**
+     * Items offered this visit, for display-only UIs (order matches shop numbering).
+     *
+     * @return unmodifiable list
+     */
+    public List<Item> getDisplayedItems() {
+        return Collections.unmodifiableList(items);
     }
 
     /**

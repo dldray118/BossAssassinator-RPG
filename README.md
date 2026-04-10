@@ -6,9 +6,11 @@ Built a turn-based RPG game, *Boss Assassinator*, using Java and Gradle. Impleme
 
 ## How to run
 - **CLI (terminal):** `./gradlew run` — same `GameContext` / session and `PlayerCommandSource` flow as always; uses stdin/stdout.
-- **GUI (desktop):** `./gradlew runGui` — same engine loop and intents; output is mirrored into the window log, and choices use on-screen buttons instead of typed input.
+- **GUI (desktop):** `./gradlew runGui` — same engine loop and intents; session text in the log, with hub / shop / combat imagery driven from game state and on-screen buttons instead of stdin.
 
 Requires **Java 17** (Gradle uses the project toolchain). The GUI build pulls **JavaFX** via Gradle; you need a graphical environment (local desktop or a virtual framebuffer if you are on a headless server).
+
+**Visual GUI assets** (optional reskin): PNGs under `src/main/resources/game/ui/assets/` (`boss-assassin-*.png`). Swap files to change art without touching Java.
 
 ## Tech Stack
 - **Language**: Java 17

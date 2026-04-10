@@ -14,4 +14,11 @@ public interface Enemy {
     String getName();
 
     int getDamage();
+
+    /**
+     * Maximum hit points for this enemy type (starting health at spawn).
+     *
+     * @return max HP used for UI meters; not mutated by damage
+     */
+    int getMaxHealth();
 }

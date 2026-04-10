@@ -34,4 +34,9 @@ public class MediumEnemy implements Enemy {
     public int getDamage() {
         return 10; // Medium enemy attack damage
     }
+
+    @Override
+    public int getMaxHealth() {
+        return 100;
+    }
 }

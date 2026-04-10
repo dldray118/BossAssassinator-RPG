@@ -34,4 +34,9 @@ public class SmallEnemy implements Enemy {
     public int getDamage() {
         return 5; // Small enemy attack damage
     }
+
+    @Override
+    public int getMaxHealth() {
+        return 50;
+    }
 }

@@ -90,4 +90,14 @@ public class CharacterTest {
     public void testCreateForTierInvalid() {
         assertThrows(IllegalArgumentException.class, () -> EnemyFactory.createForTier(99));
     }
+
+    /**
+     * Max HP matches spawn values used for UI meters (not combat rules).
+     */
+    @Test
+    public void testEnemyMaxHealthByTier() {
+        assertEquals(50, EnemyFactory.createForTier(0).getMaxHealth());
+        assertEquals(100, EnemyFactory.createForTier(1).getMaxHealth());
+        assertEquals(200, EnemyFactory.createForTier(2).getMaxHealth());
+    }
 }
