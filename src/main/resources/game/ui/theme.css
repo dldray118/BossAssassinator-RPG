@@ -61,3 +61,61 @@
 .game-button:pressed {
     -fx-background-color: #a82d44;
 }
+
+.visual-gameplay-pane {
+    -fx-background-color: #0a0a12;
+    -fx-border-color: #2e2e48;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.45), 12, 0.2, 0, 2);
+}
+
+.visual-backdrop {
+    -fx-opacity: 0.95;
+}
+
+.hub-hint {
+    -fx-text-fill: rgba(248, 248, 255, 0.88);
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-padding: 4 10;
+    -fx-background-color: rgba(233, 69, 96, 0.22);
+    -fx-background-radius: 6;
+}
+
+.combat-card {
+    -fx-padding: 12 14;
+    -fx-background-color: rgba(18, 18, 32, 0.88);
+    -fx-background-radius: 12;
+    -fx-border-color: rgba(233, 69, 96, 0.25);
+    -fx-border-radius: 12;
+}
+
+.combat-portrait {
+    -fx-effect: dropshadow(gaussian, rgba(233, 69, 96, 0.35), 10, 0.2, 0, 1);
+}
+
+.combat-card .label {
+    -fx-text-fill: #e8e8f2;
+    -fx-font-weight: bold;
+}
+
+.combat-hp-bar .bar {
+    -fx-background-color: linear-gradient(to right, #e94560, #ff7a8f);
+    -fx-background-radius: 6;
+}
+
+.combat-hp-bar .track {
+    -fx-background-color: #2a2a40;
+    -fx-background-radius: 6;
+}
+
+.shop-summary {
+    -fx-background-color: rgba(8, 8, 16, 0.82);
+    -fx-background-radius: 0 10 0 0;
+}
+
+.shop-line {
+    -fx-text-fill: #dcdcf0;
+    -fx-font-size: 13px;
+}

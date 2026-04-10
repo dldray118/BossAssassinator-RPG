@@ -16,10 +16,12 @@ import javafx.stage.Stage;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 /**
  * JavaFX entry: same {@link GameContext} loop as CLI with {@link JavaFxPlayerCommandSource}.
+ * Hub map, shop scene, and combat portraits are driven only from engine state (no duplicate rules).
  */
 public class BossAssassinatorApp extends Application {
 
@@ -38,7 +40,7 @@ public class BossAssassinatorApp extends Application {
 
         Label header = new Label("Boss Assassinator RPG");
         header.getStyleClass().add("title-label");
-        Label tagline = new Label("Same session loop as the CLI — play from the log and action bar.");
+        Label tagline = new Label("Same engine and intents as the CLI — hub, shop, and combat views update with your run.");
         tagline.getStyleClass().add("subtitle-label");
         tagline.setWrapText(true);
 
@@ -46,29 +48,39 @@ public class BossAssassinatorApp extends Application {
         top.setPadding(new Insets(12, 16, 10, 16));
         top.getStyleClass().add("header-box");
 
+        VisualGameplayPane visual = new VisualGameplayPane();
+        visual.setMinHeight(260);
+        visual.setPrefHeight(300);
+        visual.setMaxHeight(360);
+
         Label logCaption = new Label("Session log");
         logCaption.getStyleClass().add("panel-caption");
         VBox logStack = new VBox(8, logCaption, log);
         VBox.setVgrow(log, Priority.ALWAYS);
         logStack.setFillWidth(true);
 
+        VBox center = new VBox(10, visual, logStack);
+        center.setFillWidth(true);
+        VBox.setVgrow(logStack, Priority.ALWAYS);
+
         BorderPane root = new BorderPane();
         root.setTop(top);
-        BorderPane.setMargin(logStack, new Insets(0, 16, 8, 16));
-        root.setCenter(logStack);
+        BorderPane.setMargin(center, new Insets(0, 16, 8, 16));
+        root.setCenter(center);
         root.setBottom(actionBar);
         root.getStyleClass().add("root-pane");
 
         Scene scene = new Scene(root, 820, 600);
-        var css = getClass().getResource("/game/ui/theme.css");
+        URL css = getClass().getResource("/game/ui/theme.css");
         if (css != null) {
             scene.getStylesheets().add(css.toExternalForm());
         }
 
-        JavaFxPlayerCommandSource commands = new JavaFxPlayerCommandSource(actionBar);
         GameContext game = new GameContext();
         game.setInteractive(true);
+        JavaFxPlayerCommandSource commands = new JavaFxPlayerCommandSource(actionBar, visual, game);
         game.setPlayerCommands(commands);
+        visual.showHub();
 
         PrintStream originalOut = System.out;
         PrintStream guiOut = new PrintStream(new TextAreaOutputStream(log), true, StandardCharsets.UTF_8);
@@ -80,6 +92,7 @@ public class BossAssassinatorApp extends Application {
             } finally {
                 System.setOut(originalOut);
                 Platform.runLater(() -> {
+                    visual.showHub();
                     actionBar.getChildren().clear();
                     Label done = new Label("Run finished.");
                     done.getStyleClass().add("subtitle-label");

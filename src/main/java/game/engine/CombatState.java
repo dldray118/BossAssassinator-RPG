@@ -109,4 +109,22 @@ public class CombatState implements GameState {
     public Fighter getBossAssassinator() {
         return bossAssassinator;
     }
+
+    /**
+     * Active opponent for the duration of this combat state's fight loop.
+     *
+     * @return current enemy
+     */
+    public Enemy getCurrentEnemy() {
+        return currentEnemy;
+    }
+
+    /**
+     * Tier index for this fight: 0 small, 1 medium, 2 boss (matches {@link GameSession#getEnemyLevel()} at combat entry).
+     *
+     * @return combat tier
+     */
+    public int getCombatEnemyTier() {
+        return enemyLevel;
+    }
 }
