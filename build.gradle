@@ -28,8 +28,20 @@ run {
 tasks.register("runGui", JavaExec) {
     group = "application"
     description = "Run JavaFX desktop UI"
-    classpath = sourceSets.main.runtimeClasspath
-    mainClass = "game.ui.BossAssassinatorApp"
+    mainClass.set("game.ui.BossAssassinatorApp")
+
+    // Java 11+ needs JavaFX on the module path; classpath-only runs hit "runtime components are missing".
+    def runtimeCp = sourceSets.main.runtimeClasspath
+    def javafxJars = runtimeCp.filter { File f ->
+        f.name.startsWith("javafx-") && f.name.endsWith(".jar")
+    }
+    classpath = runtimeCp.filter { File f ->
+        !(f.name.startsWith("javafx-") && f.name.endsWith(".jar"))
+    }
+    jvmArgs = [
+            "--module-path", javafxJars.asPath,
+            "--add-modules", "javafx.controls,javafx.graphics,javafx.base"
+    ]
 }
 
 // mavenCentral: jcenter is deprecated and unmaintained.
